@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank math - the label names the watt-hours, the watt-hours name the charges, and the flight names the limit</title>
+<style>
+  :root { --accent: #6a3a5a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: #f4f6f8; color: #24282c; line-height: 1.55; }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 20px 64px; }
+  h1 { font-size: 2.4rem; margin: 0 0 12px; color: var(--accent); }
+  h2 { font-size: 1.25rem; margin: 40px 0 12px; }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+  .cta { display: inline-block; margin: 10px 0 8px; padding: 12px 22px; background: var(--accent); color: #fff; text-decoration: none; border-radius: 6px; font-size: 1.05rem; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .norms { background: #fff; border: 1px solid #d8dfe6; border-left: 4px solid var(--accent); border-radius: 6px; padding: 14px 18px; margin-top: 12px; }
+  footer { max-width: 720px; margin: 0 auto; padding: 0 20px 40px; font-size: 0.85rem; color: #98a2ab; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bank math</h1>
+  <p>A power bank is sold by its biggest number: the milliamp-hours, printed large, counted at the cell's own voltage. The honesty comes in three moves. First the milliamp-hours become watt-hours, the one number the label and the airline both speak. Then the watt-hours become charges, after the conversion losses the marketing page forgets. Then the watt-hours meet the flight, where a labeled 100 Wh line decides whether the bank boards the plane. Bank math does the arithmetic for all three. Exact numbers, every borrowed figure labeled.</p>
+  <a class="cta" href="app.html">Open the calculators</a>
+  <h2>The three tools</h2>
+  <ul>
+    <li><strong>Watt-hour plan</strong> - the milliamp-hours and the labeled cell voltage become the watt-hours the label should have led with.</li>
+    <li><strong>Charge plan</strong> - the milliamp-hours, after an honest delivery factor, become the charges your phone actually gets.</li>
+    <li><strong>Flight plan</strong> - the watt-hours against the carry-on line become the verdict on whether the bank flies.</li>
+  </ul>
+  <h2>Labeled norms</h2>
+  <div class="norms">
+    Labeled norms: a 3.7 V cell, a 65% honest delivery factor, and a 100 Wh carry-on line with airline approval up to 160 Wh - all illustrative defaults you can change by reading your own label. A real bank ages and sags in the cold; the number you measure beats the number on the box. Airline rules live with the airline, and a lithium bank never rides in checked luggage.
+  </div>
+</main>
+<footer>Built by the app factory. <a href="https://github.com/iLanis-agent/bankmath">Source on GitHub</a></footer>
+</body>
+</html>
