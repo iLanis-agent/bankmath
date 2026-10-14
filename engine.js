@@ -34,11 +34,12 @@
 
   function flightPlan(mah, volts) {
     if (!(mah > 0) || !(volts > 0)) return { error: "the bank and the volts must be positive" };
-    var wh = wattHours(mah, volts);
+    var raw = mah * volts / 1000; // unrounded: the bands judge the true figure
+    var wh = round1(raw);         // rounded for display only
     var verdict;
-    if (wh <= CABIN_WH) verdict = "clears carry-on";
-    else if (wh <= APPROVAL_WH) verdict = "needs airline approval";
-    else verdict = "stays home";
+    if (raw <= CABIN_WH) verdict = "in the common cabin band";
+    else if (raw <= APPROVAL_WH) verdict = "in the approval band";
+    else verdict = "past the usual cabin bands";
     return { wh: wh, verdict: verdict };
   }
 
