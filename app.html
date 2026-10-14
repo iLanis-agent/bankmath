@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank math - calculators</title>
+<style>
+  :root { --accent: #6a3a5a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: #f4f6f8; color: #24282c; line-height: 1.55; }
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 8px; color: var(--accent); }
+  .lede { margin: 0 0 14px; max-width: 640px; }
+  .note { background: #fff; border: 1px solid #d8dfe6; border-left: 4px solid var(--accent); border-radius: 6px; padding: 12px 16px; font-size: 0.9rem; margin: 0 0 28px; max-width: 720px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  section { background: #fff; border: 1px solid #d8dfe6; border-radius: 8px; padding: 20px 22px; }
+  h2 { font-size: 1.15rem; margin: 0 0 6px; }
+  .hint { font-size: 0.9rem; color: #727e88; margin: 0 0 14px; }
+  label { display: block; font-size: 0.9rem; margin: 10px 0 3px; }
+  input { width: 100%; padding: 8px 10px; font-size: 1rem; border: 1px solid #b3bfc9; border-radius: 5px; font-family: inherit; }
+  button { margin-top: 16px; width: 100%; padding: 11px; background: var(--accent); color: #fff; border: 0; border-radius: 6px; font-size: 1rem; cursor: pointer; font-family: inherit; }
+  button:hover { filter: brightness(1.08); }
+  .out { margin-top: 14px; font-size: 1rem; min-height: 1.4em; }
+  .out.err { color: #a32222; }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; font-size: 0.85rem; color: #98a2ab; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bank math</h1>
+  <p class="lede">The label names the watt-hours, the watt-hours name the charges, and the flight names the limit. Exact arithmetic, every borrowed number labeled.</p>
+  <div class="note">Illustrative planning arithmetic only. Every rate is a labeled default. A real bank ages and sags in the cold; the number you measure beats the number on the box. Airline rules live with the airline - check the carrier before the flight, and never pack a lithium bank in checked luggage.</div>
+  <div class="grid">
+    <section>
+      <h2>Watt-hour plan</h2>
+      <p class="hint">The label names the watt-hours.</p>
+      <label for="w-m">Bank capacity (mAh)</label>
+      <input id="w-m" type="number" value="10000" min="0" step="100">
+      <label for="w-v">Cell voltage (V)</label>
+      <input id="w-v" type="number" value="3.7" min="0" step="0.05">
+      <button id="w-go">Name the watt-hours</button>
+      <div class="out" id="w-out"></div>
+    </section>
+    <section>
+      <h2>Charge plan</h2>
+      <p class="hint">The watt-hours name the charges.</p>
+      <label for="c-m">Bank capacity (mAh)</label>
+      <input id="c-m" type="number" value="10000" min="0" step="100">
+      <label for="c-p">Phone battery (mAh)</label>
+      <input id="c-p" type="number" value="4000" min="0" step="100">
+      <button id="c-go">Count the charges</button>
+      <div class="out" id="c-out"></div>
+    </section>
+    <section>
+      <h2>Flight plan</h2>
+      <p class="hint">The flight names the limit.</p>
+      <label for="f-m">Bank capacity (mAh)</label>
+      <input id="f-m" type="number" value="26800" min="0" step="100">
+      <label for="f-v">Cell voltage (V)</label>
+      <input id="f-v" type="number" value="3.7" min="0" step="0.05">
+      <button id="f-go">Check the flight</button>
+      <div class="out" id="f-out"></div>
+    </section>
+  </div>
+</main>
+<footer>Built by the app factory. <a href="index.html">About</a> &middot; <a href="https://github.com/iLanis-agent/bankmath">Source</a></footer>
+<script src="engine.js"></script>
+<script>
+function num(id){ return parseFloat(document.getElementById(id).value); }
+function show(id, r, render){
+  var el = document.getElementById(id);
+  if (r.error) { el.textContent = r.error; el.classList.add('err'); }
+  else { el.textContent = render(r); el.classList.remove('err'); }
+}
+document.getElementById('w-go').addEventListener('click', function(){
+  var a=[num('w-m'),num('w-v')];
+  show('w-out', BankMath.whPlan.apply(null,a), function(r){ return BankMath.renderWh.apply(null,[r].concat(a)); });
+});
+document.getElementById('c-go').addEventListener('click', function(){
+  var a=[num('c-m'),num('c-p')];
+  show('c-out', BankMath.chargePlan.apply(null,a), function(r){ return BankMath.renderCharge.apply(null,[r].concat(a)); });
+});
+document.getElementById('f-go').addEventListener('click', function(){
+  var a=[num('f-m'),num('f-v')];
+  show('f-out', BankMath.flightPlan.apply(null,a), function(r){ return BankMath.renderFlight.apply(null,[r].concat(a)); });
+});
+</script>
+</body>
+</html>
