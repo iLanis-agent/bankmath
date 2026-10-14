@@ -36,10 +36,11 @@ def charge_plan(mah, phoneMah):
 def flight_plan(mah, volts):
     if not (mah > 0) or not (volts > 0):
         return {"error": "the bank and the volts must be positive"}
-    wh = watt_hours(mah, volts)
-    if wh <= CABIN_WH: verdict = "clears carry-on"
-    elif wh <= APPROVAL_WH: verdict = "needs airline approval"
-    else: verdict = "stays home"
+    raw = mah * volts / 1000  # unrounded: the bands judge the true figure
+    wh = round1(raw)          # rounded for display only
+    if raw <= CABIN_WH: verdict = "in the common cabin band"
+    elif raw <= APPROVAL_WH: verdict = "in the approval band"
+    else: verdict = "past the usual cabin bands"
     return {"wh": wh, "verdict": verdict}
 
 def render_wh(r, mah, volts):
@@ -64,7 +65,7 @@ for a in [[10000,3.7],[5000,3.7],[26800,3.7],[20000,3.7],[10000,3.85],[30000,3.7
     add("whPlan", wh_plan, render_wh, a)
 for a in [[10000,4000],[5000,4000],[20000,4000],[26800,3000],[10000,3000],[5000,2500],[20000,5000],[10000,4500],[0,4000],[10000,0]]:
     add("chargePlan", charge_plan, render_charge, a)
-for a in [[26800,3.7],[30000,3.7],[50000,3.7],[10000,3.7],[20000,3.7],[43000,3.7],[16000,3.7],[27000,3.7],[0,3.7],[26800,0]]:
+for a in [[26800,3.7],[30000,3.7],[50000,3.7],[10000,3.7],[20000,3.7],[43000,3.7],[16000,3.7],[27000,3.7],[0,3.7],[26800,0],[27028,3.7],[27027,3.7],[43244,3.7],[43243,3.7]]:
     add("flightPlan", flight_plan, render_flight, a)
 json.dump(cases, open("expected.json", "w"), separators=(",", ":"))
 print(len(cases), "cases")
